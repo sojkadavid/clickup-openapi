@@ -167,6 +167,73 @@
           }
         ]
       }
+    },
+    "/space/{space_id}/folder": {
+      "get": {
+        "summary": "Get Folders",
+        "description": "Retrieve folders within a specific space from ClickUp.",
+        "operationId": "getFolders",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the space to retrieve folders from.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Folders retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "folders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The ID of the folder."
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the folder."
+                          },
+                          "hidden": {
+                            "type": "boolean",
+                            "description": "Whether the folder is hidden."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters."
+          },
+          "404": {
+            "description": "Folders not found."
+          },
+          "401": {
+            "description": "Unauthorized access. API key may be missing or invalid."
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
