@@ -11,7 +11,96 @@
       "description": "Production server"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/task/{task_id}": {
+      "get": {
+        "summary": "Get Task",
+        "description": "Retrieve a specific task by its ID from ClickUp.",
+        "operationId": "getTask",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the task to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "custom_task_ids",
+            "in": "query",
+            "required": false,
+            "description": "Whether custom task IDs are enabled.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "team_id",
+            "in": "query",
+            "required": false,
+            "description": "The ID of the team, required if custom_task_ids is true.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the task."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the task."
+                    },
+                    "status": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "description": "The status of the task."
+                        }
+                      }
+                    },
+                    "due_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The due date of the task, if any."
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters."
+          },
+          "404": {
+            "description": "Task not found."
+          },
+          "401": {
+            "description": "Unauthorized access. API key may be missing or invalid."
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "apiKeyAuth": {
