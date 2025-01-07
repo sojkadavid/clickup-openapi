@@ -99,6 +99,74 @@
           }
         ]
       }
+    },
+    "/list/{list_id}": {
+      "get": {
+        "summary": "Get List",
+        "description": "Retrieve a specific list by its ID from ClickUp.",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "name": "list_id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the list to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the list."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the list."
+                    },
+                    "orderindex": {
+                      "type": "integer",
+                      "description": "The order index of the list."
+                    },
+                    "status": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "description": "The status of the list."
+                        }
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters."
+          },
+          "404": {
+            "description": "List not found."
+          },
+          "401": {
+            "description": "Unauthorized access. API key may be missing or invalid."
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
